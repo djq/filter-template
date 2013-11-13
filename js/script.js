@@ -1,5 +1,13 @@
 'use strict';
 
+var grayIcon = L.icon({
+    iconUrl: "leaflet/images/marker-icon-gray.png"   
+});
+
+var defaultIcon = L.icon({
+    iconUrl: "leaflet/images/marker-icon.png"   
+});
+
 console.log('loading config');
 L.Util.ajax('config.json').then(function(config){
     var map = makeBaseMap(config);
@@ -22,6 +30,8 @@ L.Util.ajax('config.json').then(function(config){
         var onClick = function(e){
             map.panTo(e.latlng); //zoom to the clicked element
             info.update(e.target.feature.properties); //update infobox
+            this.setIcon(grayIcon);
+            console.log('marker removed'); 
         };
     
         var setupFeature = function(feature, layer) {
