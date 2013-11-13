@@ -27,11 +27,19 @@ L.Util.ajax('config.json').then(function(config){
         };
         info.addTo(map);
 
+        var previouslyClicked;
+
         var onClick = function(e){
             map.panTo(e.latlng); //zoom to the clicked element
             info.update(e.target.feature.properties); //update infobox
-            this.setIcon(grayIcon);
-            console.log('marker removed'); 
+            this.setIcon(grayIcon); // set the clicked marker to be gray
+
+            // reset the previously clicked marker
+            if(previouslyClicked){
+                previouslyClicked.setIcon(defaultIcon); 
+            }
+             
+            previouslyClicked = this;            
         };
     
         var setupFeature = function(feature, layer) {
